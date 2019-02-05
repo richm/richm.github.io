@@ -35,15 +35,15 @@ actual detailed routing steps.
   by Fluentd.  You will use this directory for subsequent steps below.  The
   steps below assume the current directory is this directory:
 
-    mkdir working_dir
-    cd working_dir
+        mkdir working_dir
+        cd working_dir
 
 * Make sure you are in the logging project.  This will be `openshift-logging`
   for later versions (3.10 or later) or `logging` for earlier versions:
 
-    oc project openshift-logging
-    OR
-    oc project logging
+        oc project openshift-logging
+        OR
+        oc project logging
 
 * Make your own copy of `output-applications.conf` and `output-operations.conf`
   from a running Fluentd pod:
@@ -59,13 +59,13 @@ Assuming `$fluentd_pod` is the name of a running Fluentd pod:
 
 * Make a copy of the current `logging-fluentd` configmap:
 
-    oc extract configmap/logging-fluentd --to=.
+        oc extract configmap/logging-fluentd --to=.
 
 * Make a copy of the original `fluent.conf`:
 
-    if [ ! -f fluent.conf.orig ] ; then
-      cp fluent.conf fluent.conf.orig
-    fi
+        if [ ! -f fluent.conf.orig ] ; then
+              cp fluent.conf fluent.conf.orig
+        fi
 
 * Edit `fluent.conf` to use your customized `output-applications.conf` and
   `output-operations.conf`
@@ -253,12 +253,12 @@ Routing Specific steps.
 
 * Recreate the logging-fluentd configmap with your new files:
 
-    oc delete configmap logging-fluentd
-    oc create configmap logging-fluentd --from-file=.
+        oc delete configmap logging-fluentd
+            oc create configmap logging-fluentd --from-file=.
 
 * Set `ES_HOST` and restart *all* Fluentd pods:
 
-    oc set env daemonset/logging-fluentd ES_HOST=value-is-not-used
+        oc set env daemonset/logging-fluentd ES_HOST=value-is-not-used
 
 Setting `ES_HOST` to a value other than its current value will also trigger all
 Fluentd pods to be restarted.  If you have already changed the value of
