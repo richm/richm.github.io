@@ -2,8 +2,8 @@ How to parse JSON strings with embedded JSON strings
 ====================================================
 
 Many times I have to deal with JSON documents in which the values are still
-more embedded JSON documents.  For example, from (Kubernetes operator framework
-registry)[https://github.com/operator-framework/operator-registry#example]
+more embedded JSON documents.  For example, from [Kubernetes operator framework
+registry](https://github.com/operator-framework/operator-registry#example):
 
     {
       "csvName": "etcdoperator.v0.9.2",
