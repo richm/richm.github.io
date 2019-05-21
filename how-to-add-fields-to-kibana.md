@@ -116,7 +116,7 @@ Apply the index pattern file to Elasticsearch.  Use a command line like this:
 ```bash
 cat $fieldfile | \
   oc exec -i -c elasticsearch $espod -- es_util \
-    --query=".kibana.$userhash/index-pattern/$indexpattern*" -XPUT --data-binary @- | \
+    --query=".kibana.$userhash/index-pattern/$indexpattern" -XPUT --data-binary @- | \
   python -mjson.tool
 ```
 
