@@ -34,6 +34,7 @@ Any undefined field not specified here will be treated as a string:
                 },
                 "match": "*",
                 "match_mapping_type": "string"
+                ...
 
 If you have time valued fields that you want to use for sorting and collation, you
 will need to define these separately in separate index templates.
@@ -67,7 +68,7 @@ Create a JSON file for each index pattern, like this:
               }
             }
           }
-        }
+        },
         "template": ".operations.*"
     }
 
@@ -92,7 +93,7 @@ Call this one `add-time-fields-to-operations-indices.json`.
               }
             }
           }
-        }
+        },
         "template": "project.*"
     }
 
