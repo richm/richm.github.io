@@ -1,3 +1,8 @@
+# [How to include vars and tasks in Ansible](how-to-include-vars-and-tasks-in-ansible)
+June 15, 2020
+
+---
+
 # [How to add custom fields to Kibana](how-to-add-fields-to-kibana)
 May 21, 2019
 
