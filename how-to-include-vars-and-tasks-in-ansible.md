@@ -13,6 +13,7 @@ pass to the `package` module, and the name of the service to manage with the
 `service` module, are platform specific.  We use an idiom like this in our
 role `tasks/main.yml`:
 ```yaml
+# {% raw %}
 - name: Set version specific variables
   include_vars: "{{ item }}"
   with_first_found:
@@ -33,6 +34,7 @@ role `tasks/main.yml`:
     state: started
     enabled: yes
   loop: "{{ __rolename_services }}"
+# {% endraw %}
 ```
 This uses the Ansible [first_found](https://docs.ansible.com/ansible/latest/plugins/lookup/first_found.html)
 lookup plugin in the form of a `with_first_found` loop to load
