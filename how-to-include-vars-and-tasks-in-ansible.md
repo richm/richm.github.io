@@ -61,6 +61,7 @@ each other, and not every role defines every platform/version specific file.  Wh
 another role, the lookup path `ansible_search_path` will contain the path for both roles.
 In this example, `role_a` includes `role_b`.
 ```yaml
+# {% raw %}
 - name: in role_a tasks/main.yml
   debug:
     msg: in role_a tasks/main.yml
@@ -68,21 +69,27 @@ In this example, `role_a` includes `role_b`.
 - name: show ansible_search_path before
   debug:
     msg: ansible_search_path before {{ ansible_search_path }}
+# {% endraw %}
 ```
 At this point, `ansible_search_path` will contain `['/base/roles/role_a','/base/roles/role_a/tasks']`.  Now, include `role_b`:
 ```yaml
+# {% raw %}
 - name: include role_b
   include_role:
     name: role_b
+# {% endraw %}
 ```
 Where `role_b` looks like this:
 ```yaml
+# {% raw %}
 - name: show ansible_search_path in role_b
   debug:
     msg: ansible_search_path role_b {{ ansible_search_path }}
+# {% endraw %}
 ```
 At this point, `ansible_search_path` will contain `['/base/roles/role_b','/base/roles/role_a','/base/roles/role_b/tasks']`.  Note the `/base/roles/role_a` in there.  Now, use the variable inclusion idiom:
 ```yaml
+# {% raw %}
 - name: Set version-specific variables for role_b
   include_vars: "{{ item }}"
   with_first_found:
@@ -92,6 +99,7 @@ At this point, `ansible_search_path` will contain `['/base/roles/role_b','/base/
         - "{{ ansible_distribution }}.yml"
         - "{{ ansible_os_family }}.yml"
         - "default.yml"
+# {% endraw %}
 ```
 If `role_b` does not define `vars/Fedora_31.yml`, but `role_a` does, `role_b` **will include** `vars/Fedora_31.yml` from `role_a`, and **will not include any vars** from `role_b`.
 
@@ -100,6 +108,7 @@ Solutions
 
 It is best to explicitly specify the path to use, rather than relying on the default behavior:
 ```yaml
+# {% raw %}
 - name: Set version-specific variables for role_b
   include_vars: "{{ item }}"
   with_first_found:
@@ -111,6 +120,7 @@ It is best to explicitly specify the path to use, rather than relying on the def
         - "default.yml"
       paths:
         - "{{ role_path }}/vars"
+# {% endraw %}
 ```
 The `role_path` is a built-in which will be `/base/rolename`, so you are guaranteed to
 look in `/base/role_b/vars` for the files, and find only the files for your role.
@@ -122,6 +132,7 @@ Alternatives
 for every possible combination of platform/version, or you don't want to create `vars/default.yml`,
 you can use the `skip: true` flag:
 ```yaml
+# {% raw %}
 - name: Set version-specific variables for role
   include_vars: "{{ item }}"
   with_first_found:
@@ -131,12 +142,14 @@ you can use the `skip: true` flag:
       paths:
         - "{{ role_path }}/vars"
       skip: true
+# {% endraw %}
 ```
 In this example, I rely on `vars/main.yml` for most everything, and only provide some
 platform/version customizations.
 
 Another way to do this is the following:
 ```yaml
+# {% raw %}
 - name: Set version-specific variables for role
   include_vars: "{{ item }}"
   loop:
@@ -145,6 +158,7 @@ Another way to do this is the following:
     - "{{ role_path }}/vars/{{ ansible_distribution }}_{{ ansible_distribution_major_version }}.yml"
     - "{{ role_path }}/vars/{{ ansible_distribution }}_{{ ansible_distribution_version }}.yml"
   when: item is file
+# {% endraw %}
 ```
 The files in the `loop` are in order from least specific to most specific.
 Each file in the `loop` list will allow you to add or override additional
@@ -165,6 +179,7 @@ platform specific tasks once, for the most specific match.  In that case, use
 `with_first_found` with the file list in order of most specific to least
 specific, including a "default":
 ```yaml
+# {% raw %}
 - name: Perform platform/version specific tasks
   include_tasks: "{{ item }}"
   with_first_found:
@@ -176,10 +191,12 @@ specific, including a "default":
         - "setup_default.yml"
       paths:
         - "{{ role_path }}/tasks"
+# {% endraw %}
 ```
 And same with the vars files above, if you don't want to have to provide the default,
 or only some files, use `skip: true`:
 ```yaml
+# {% raw %}
 - name: Perform platform/version specific tasks
   include_tasks: "{{ item }}"
   with_first_found:
@@ -189,4 +206,5 @@ or only some files, use `skip: true`:
       paths:
         - "{{ role_path }}/tasks"
       skip: true
+# {% endraw %}
 ```
