@@ -1,3 +1,8 @@
+# [Ansible collections - converting from roles with ruamel](https://linux-system-roles.github.io/2020/09/collection-conversion-ruamel-roundtrip)
+September 22, 2020
+
+---
+
 # [How to include vars and tasks in Ansible](how-to-include-vars-and-tasks-in-ansible)
 June 15, 2020
 
