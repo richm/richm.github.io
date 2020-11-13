@@ -1,3 +1,8 @@
+# [How to Catch and Re-Raise errors in Ansible](how-to-catch-and-reraise-errors-in-ansible)
+November 13, 2020
+
+---
+
 # [Ansible collections - converting from roles with ruamel](https://linux-system-roles.github.io/2020/09/collection-conversion-ruamel-roundtrip)
 September 22, 2020
 
