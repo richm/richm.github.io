@@ -1,3 +1,8 @@
+# [How to find failed plays in Ansible logs](how-to-see-if-ansible-logs-have-failures.md)
+August 19, 2021
+
+---
+
 # [How to Catch and Re-Raise errors in Ansible](how-to-catch-and-reraise-errors-in-ansible)
 November 13, 2020
 
